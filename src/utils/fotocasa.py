@@ -323,8 +323,7 @@ def clean_fotocasa_data(ids, precios, tipos, titulos, atributos, telefonos, ciud
     df.replace('\.', '', regex=True, inplace=True)
     df['Precio (€/mes)'] = pd.to_numeric(df['Precio (€/mes)'])
 
-    # Clean phone number column -> Set NAs & remove spaces
-    df['Teléfono'].replace('Unknown', np.nan, inplace=True)
+    # Clean phone number column -> Remove spaces
     df['Teléfono'] = df['Teléfono'].str.replace(' ', '')
 
     # Process "Título" column
