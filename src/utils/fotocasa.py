@@ -101,10 +101,12 @@ def fotocasa_bot(ciudad):
     scroll = True
     while scroll == True:
         try:
+            # Sleep 1 second
+            time.sleep(1)
             # Scroll down
             actions.key_down(Keys.PAGE_DOWN).key_up(Keys.PAGE_DOWN).perform()
-            # Sleep 0.5 seconds
-            time.sleep(0.5)
+            # Sleep 1 second
+            time.sleep(1)
             actions.move_to_element(
                 s.find_element(By.XPATH,
                                '//a[@class="sui-LinkBasic sui-AtomButton sui-AtomButton--primary sui-AtomButton--solid sui-AtomButton--center sui-AtomButton--small sui-AtomButton--link"]')
@@ -132,8 +134,8 @@ def fotocasa_bot(ciudad):
         try:
             # Scroll down
             actions.key_down(Keys.PAGE_DOWN).key_up(Keys.PAGE_DOWN).perform()
-            # Sleep 0.5 seconds
-            time.sleep(0.5)
+            # Sleep 1 second
+            time.sleep(1)
             actions.move_to_element(
                 s.find_element(By.XPATH, '//header[@class="re-SharedTopbar re-SharedTopbar--search"]')
             ).perform()
@@ -178,10 +180,8 @@ def fotocasa_bot(ciudad):
                 tipos = soup.find('div', class_='re-SearchOtherZonesBlock').find_all_previous('span', class_='re-CardTitle')
                 # Find all titles in the page
                 titulos = soup.find('div', class_='re-SearchOtherZonesBlock').find_all_previous('span', class_='re-CardTitle')
-                # Result section
-                results = soup.find('div', class_='re-SearchOtherZonesBlock').find_previous('section')
                 # Find all attributes in the page
-                atributos = results.find('div', class_='re-SearchOtherZonesBlock').find_all_previous('li', class_=re.compile('-feature'))
+                attributes = soup.find('div', class_='re-SearchOtherZonesBlock').find_all_previous('ul', class_=re.compile('-wrapper'))
                 atrs = []
                 # Find all telephones in the page
                 telefonos = soup.find('div', class_='re-SearchOtherZonesBlock').find_all_previous('div', class_='re-CardContact-appendix')
@@ -194,10 +194,8 @@ def fotocasa_bot(ciudad):
                 tipos = soup.find_all('span', class_='re-CardTitle')
                 # Find all titles in the page
                 titulos = soup.find_all('span', class_='re-CardTitle')
-                # Result section
-                results = soup.find('section')
                 # Find all attributes in the page
-                atributos = results.find_all('li', class_=re.compile('-feature'))
+                attributes = soup.find_all('ul', class_=re.compile('-wrapper'))
                 atrs = []
                 # Find all telephones in the page
                 telefonos = soup.find_all('div', class_='re-CardContact-appendix')
@@ -226,32 +224,35 @@ def fotocasa_bot(ciudad):
 
             # Store attributes at list
             k = 0
-            for n_atr, atributo in enumerate(atributos):
-                if k in pisos:
-                    try:
-                        atr = atributo.find('span').getText()
-                    # print('WITH ICONS')
-                    except AttributeError:
-                        atr = atributo.getText()
-                    # print('WITHOUT ICONS')
-                    # print(n_atr, atr)
-                    if 'hab' in atr and len(atrs) > 0 or 'baño' in atr and len(atrs) >= 2 or 'm²' in atr and len(atrs) >= 3:
-                        k += 1
-                        # print(f'Añadir la lista local ({atrs}) a la lista global!')
-                        lista_atributos.append(atrs)
-                        atrs = []
-                        # print(f'Y añadir {atr} a la lista local!')
-                        atrs.append(atr)
-                    elif n_atr == len(list(atributos)) - 1:
-                        k += 1
-                        atrs.append(atr)
-                        lista_atributos.append(atrs)
-                    # print(f'FINAL! Añadir {atr} a la lista local y {atrs} a la lista global!')
+            for atributo in attributes:
+                atributos = atributo.find_all('li', class_=re.compile('-feature'))
+                for n_atr, atributo in enumerate(atributos):
+                    if k in pisos:
+                        try:
+                            atr = atributo.find('span').getText()
+                            # print('WITH ICONS')
+                        except AttributeError:
+                            atr = atributo.getText()
+                            # print('WITHOUT ICONS')
+                        # print(n_atr, atr)
+                        if 'hab' in atr and len(atrs) > 0 or 'baño' in atr and len(atrs) >= 2 or 'm²' in atr and len(atrs) >= 3:
+                            k += 1
+                            # print(f'Añadir la lista local ({atrs}) a la lista global!')
+                            lista_atributos.append(atrs)
+                            atrs = []
+                            # print(f'Y añadir {atr} a la lista local!')
+                            atrs.append(atr)
+                        elif n_atr == len(list(atributos)) - 1:
+                            k += 1
+                            atrs.append(atr)
+                            lista_atributos.append(atrs)
+                            # print(f'FINAL! Añadir {atr} a la lista local y {atrs} a la lista global!')
+                            atrs = []
+                        else:
+                            # print(f'Añadir {atr} a la lista local ({atrs})!')
+                            atrs.append(atr)
                     else:
-                        # print(f'Añadir {atr} a la lista local ({atrs})!')
-                        atrs.append(atr)
-                else:
-                    k += 1
+                        k += 1
 
             # Store telephones at list
             for t, telefono in enumerate(telefonos):
@@ -304,7 +305,6 @@ def fotocasa_bot(ciudad):
 
 
 def clean_fotocasa_data(ids, precios, tipos, titulos, atributos, telefonos, ciudades):
-
     dfr = {'ID': ids,
            'Precio (€/mes)': precios,
            'Tipo': tipos,
@@ -313,7 +313,6 @@ def clean_fotocasa_data(ids, precios, tipos, titulos, atributos, telefonos, ciud
            'Telefonos': telefonos,
            'Ciudad': ciudades
            }
-
     # Create dataframe
     df = pd.DataFrame(dfr)
 
@@ -323,13 +322,13 @@ def clean_fotocasa_data(ids, precios, tipos, titulos, atributos, telefonos, ciud
     df['Precio (€/mes)'] = pd.to_numeric(df['Precio (€/mes)'])
 
     # Clean phone number column -> Set NAs & remove spaces
-    df['Telefonos'].replace('Unknown', pd.NA, inplace=True)
+    df['Telefonos'].replace('Unknown', np.nan, inplace=True)
     df['Telefonos'] = df['Telefonos'].str.replace(' ', '')
 
     # Process "Título" column
     df['Título'] = df['Título'].apply(lambda x: x.split(' en ')[1])
-    df['Dirección'] = [item.split(',')[0].strip() if ',' in item else pd.NA for item in df['Título']]
-    df['Barrio'] = [item.split(',')[-1].strip() if ',' in item else pd.NA for item in df['Título']]
+    df['Dirección'] = [item.split(',')[0].strip() if ',' in item else np.nan for item in df['Título']]
+    df['Barrio'] = [item.split(',')[-1].strip() if ',' in item else item for item in df['Título']]
     df['Dirección'] = df['Dirección'].str.strip()
     df['Barrio'] = df['Barrio'].str.strip()
     df = df.drop(['Título'], axis=1)
@@ -365,9 +364,6 @@ def clean_fotocasa_data(ids, precios, tipos, titulos, atributos, telefonos, ciud
     # Drop duplicates
     df.drop_duplicates(inplace=True, ignore_index=True)
 
-    # Change numeric type
-    df[num_attrs] = df[num_attrs].astype('Int64')
-
     # Create Price per m^2
     df['Precio del m2 (€/m2)'] = df['Precio (€/mes)'] / df['Area (m2)']
 
@@ -377,8 +373,8 @@ def clean_fotocasa_data(ids, precios, tipos, titulos, atributos, telefonos, ciud
 def process_col_num(attr_list, str_find):
     for attr in attr_list:
         if str_find in attr:
-            return int(re.findall(r'\d+', attr)[0])
-    return pd.NA
+            return float(re.findall(r'\d+', attr)[0])
+    return np.nan
 
 
 def process_col_bool(attr_list, str_find):
