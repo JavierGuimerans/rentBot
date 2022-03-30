@@ -1,4 +1,4 @@
-ID;Precio (€/mes);Tipo;Telefonos;Ciudad;Dirección;Barrio;Habitaciones;Baños;Area (m2);Planta;Ascensor;Terraza;Parking;Calefacción;Aire;Balcón;Precio del m2 (€/m2)
+ID;Precio (€/mes);Tipo;Teléfono;Ciudad;Dirección;Barrio;Habitaciones;Baños;Area (m2);Planta;Ascensor;Terraza;Parking;Calefacción;Aire;Balcón;Precio del m2 (€/m2)
 163087788;675;Apartamento;986972748;Vigo;Camiño Do Piñeiro;Navia;2.0;2.0;70.0;4.0;False;False;False;False;False;False;9.642857142857142
 162964143;800;Piso;986972965;Vigo;Amor Ruibal;Casco Urbano;3.0;2.0;100.0;4.0;False;False;False;False;False;False;8.0
 162899190;600;Piso;;Vigo;Avenida Da Hispanidade;Casco Urbano;2.0;1.0;72.0;1.0;False;False;False;False;False;False;8.333333333333334
