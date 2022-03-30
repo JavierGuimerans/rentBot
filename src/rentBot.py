@@ -9,6 +9,11 @@ from utils.fotocasa import fotocasa_bot
 
 
 def main():
+    """
+    Function that runs the fotocasa_bot function for a list of cities
+    (specified in the console by the user), creates and exports (to a csv)
+    the dataframe containing the features of the apartments from each city.
+    """
     # Check if parameters are passed
     if len(sys.argv) <= 1:
         print('No cities selected. \nExiting...')
