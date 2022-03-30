@@ -149,7 +149,7 @@ def fotocasa_bot(ciudad):
     ## STEP 4: Store the data in lists
 
     # Store the city
-    city = re.split(' en ', soup.find('h1', class_='re-SearchTitle-text').getText())[1]
+    city = re.split(' en ', soup.find('h1', class_='re-SearchTitle-text').getText())[1].strip()
     # List to store the prices
     lista_precios = []
     # List to store the types
