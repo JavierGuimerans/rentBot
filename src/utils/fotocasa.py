@@ -16,6 +16,18 @@ import re
 
 
 def fotocasa_bot(ciudad):
+    """
+    Bot that performs a search in Fotocasa and stores the features of the
+    apartments from 'ciudad' in a dataframe.
+    Parameters
+    ----------
+    ciudad : str
+        Name of the city where the apartments will be searched.
+    Returns
+    -------
+    df : pandas dataframe
+        The dataframe containing the features of the apartments from 'ciudad'.
+    """
     # User agent
     user_agent = UserAgent().random
     # print(user_agent, '\n')
@@ -307,6 +319,29 @@ def fotocasa_bot(ciudad):
 
 
 def clean_fotocasa_data(ids, precios, tipos, titulos, atributos, telefonos, ciudades):
+    """
+    Function that creates the dataframe from the input lists and cleans it.
+    Parameters
+    ----------
+    ids : list
+        List containing the ID of each apartment.
+    precios : list
+        List containing the price of each apartment.
+    tipos : list
+        List containing the type of each apartment.
+    titulos : list
+        List containing the title of each apartment.
+    atributos : list
+        List containing the attributes of each apartment.
+    telefonos : list
+        List containing the phone number of each apartment.
+    ciudades : list
+        List containing the city of each apartment.
+    Returns
+    -------
+    df : pandas dataframe
+        The cleaned dataframe created from the input lists.
+    """
     dfr = {'ID': ids,
            'Precio (€/mes)': precios,
            'Tipo': tipos,
@@ -372,6 +407,21 @@ def clean_fotocasa_data(ids, precios, tipos, titulos, atributos, telefonos, ciud
 
 
 def process_col_num(attr_list, str_find):
+    """
+    Function that creates the numerical columns.
+    Parameters
+    ----------
+    attr_list : list
+        List containing the numerical attributes of an apartment.
+    str_find : str
+        String to find in each attribute from 'attr_list'.
+    Returns
+    -------
+    float(re.findall(r'\d+', attr)[0]) : float
+        Numerical value if 'attrlist' contains an attribute containing 'str_find'.
+    np.nan : float
+        NaN value if 'attrlist' does not contain any attribute containing 'str_find'.
+    """
     for attr in attr_list:
         if str_find in attr:
             return float(re.findall(r'\d+', attr)[0])
@@ -379,6 +429,21 @@ def process_col_num(attr_list, str_find):
 
 
 def process_col_bool(attr_list, str_find):
+    """
+    Function that creates the boolean columns.
+    Parameters
+    ----------
+    attr_list : list
+        List containing the boolean attributes of an apartment.
+    str_find : str
+        String to find in each attribute from 'attr_list'.
+    Returns
+    -------
+    True : bool
+        Numerical value if 'attrlist' contains an attribute containing 'str_find'.
+    False : bool
+        NaN value if 'attrlist' does not contain any attribute containing 'str_find'.
+    """
     for attr in attr_list:
         if str_find in attr:
             return True
