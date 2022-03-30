@@ -285,6 +285,8 @@ def fotocasa_bot(ciudad):
             scroll = True
             while scroll == True:
                 try:
+                    # Sleep 1 second
+                    time.sleep(1)
                     buttons = s.find_elements(By.XPATH, '//li[@class="sui-MoleculePagination-item"]')
                     WebDriverWait(s, 30).until(
                         EC.element_to_be_clickable(buttons[-1])
