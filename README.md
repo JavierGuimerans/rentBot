@@ -15,12 +15,12 @@ El proyecto consiste en la programación de un bot que, realizando
 web scraping, consiga datos de alquileres de viviendas en las ciudades 
 solicitadas. 
 
-Como fuente de datos se toma la web Fotocasa.es, web de referencia en españa
+Como fuente de datos se toma la web Fotocasa.es, web de referencia en España
 para la venta y alquiler de viviendas.
 
 Los datos obtenidos se guardarán en formato CSV en la carpeta \data.
 También se realiza además un análisis exploratorio de los datos para 
-comprobar so valided y la utilidad que éstos pueden tener en gran cantidad 
+comprobar su validez y la utilidad que éstos pueden tener en gran cantidad 
 de aplicaciones en el área _data science_.
 
 
