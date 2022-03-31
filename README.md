@@ -12,7 +12,7 @@ el cumplimiento de la práctica PRA1 de la asignatura Tipología y
 ciclo de vida de los datos de la UOC.
 
 El proyecto consiste en la programación de un bot que, realizando 
-webscraping, consiga datos de alquileres de viviendas en las ciudades 
+web scraping, consiga datos de alquileres de viviendas en las ciudades 
 solicitadas. 
 
 Como fuente de datos se toma la web Fotocasa.es, web de referencia en españa
@@ -62,7 +62,7 @@ ciudades seleccionadas en la carpeta /data con la fecha y hora en el nombre
 de archivo.
 
 ## Requesitos especiales
-El script hace uso del driver "cromedriver" para realizar el web scraping, 
+El script hace uso del driver "chromedriver" para realizar el web scraping, 
 incluido en la carpeta /chromedriver.
 
 
