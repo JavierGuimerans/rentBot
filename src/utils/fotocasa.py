@@ -372,7 +372,7 @@ def clean_fotocasa_data(ids, precios, tipos, titulos, atributos, telefonos, ciud
     # Atributes dictionary with attribute name and string to find
     attr = {'Habitaciones': 'hab',
             'Baños': 'baño',
-            'Area (m2)': 'm²',
+            'Superficie (m2)': 'm²',
             'Planta': 'Planta',
             'Ascensor': 'Ascensor',
             'Terraza': 'Terraza',
@@ -383,8 +383,8 @@ def clean_fotocasa_data(ids, precios, tipos, titulos, atributos, telefonos, ciud
             }
 
     # Lists with numeric and boolean attributes
-    num_attrs = ['Habitaciones', 'Baños', 'Area (m2)', 'Planta']
-    bool_attrs = ['Ascensor', 'Terraza', 'Parking', 'Calefacción', 'Aire', 'Balcón']
+    num_attrs = list(attr.keys())[0:4]
+    bool_attrs = list(attr.keys())[4:10]
 
     # Create new columns for numerical attributes
     for at in num_attrs:
