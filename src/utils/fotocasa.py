@@ -179,7 +179,7 @@ def fotocasa_bot(ciudad):
 
     for page in range(1, n_pages + 1):
         # print('Page:', page)
-        for i in range(13):
+        for i in range(15):
             # Convert to html
             html_txt = s.page_source
             # Convert to BeautifulSoup object
@@ -300,14 +300,19 @@ def fotocasa_bot(ciudad):
                     # Sleep 1 second
                     time.sleep(1)
                     buttons = s.find_elements(By.XPATH, '//li[@class="sui-MoleculePagination-item"]')
+                    print('buttons:', buttons)
                     WebDriverWait(s, 30).until(
                         EC.element_to_be_clickable(buttons[-1])
                     ).click()
                     # print('Next page!', '\n')
                     scroll = False
                 except ElementClickInterceptedException:
+                    # Sleep 1 second
+                    time.sleep(1)
                     # Scroll up
                     actions.key_down(Keys.PAGE_UP).key_up(Keys.PAGE_UP).perform()
+                    # Sleep 1 second
+                    time.sleep(1)
                     pass
 
     ## STEP 5: Create the dataframe
