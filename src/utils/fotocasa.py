@@ -401,7 +401,7 @@ def clean_fotocasa_data(ids, precios, tipos, titulos, atributos, telefonos, ciud
     df.drop_duplicates(inplace=True, ignore_index=True)
 
     # Create Price per m^2
-    df['Precio del m2 (€/m2)'] = df['Precio (€/mes)'] / df['Area (m2)']
+    df['Precio del m2 (€/m2)'] = df['Precio (€/mes)'] / df['Superficie (m2)']
 
     return df
 
