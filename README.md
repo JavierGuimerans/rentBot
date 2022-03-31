@@ -54,6 +54,9 @@ siguiente instrucción en el directorio raíz:
 
 python rentBot.py ciudad1 ciudad2 ciudad3 ...
 
+Si alguna de las ciudades contiene algún espacio en su nombre, será
+necesario escribir el nombre de la ciudad entre comillas.
+
 Tras la ejecución del script, se guardan los datos correspondientes de las
 ciudades seleccionadas en la carpeta /data con la fecha y hora en el nombre 
 de archivo.
